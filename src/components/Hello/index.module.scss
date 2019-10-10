@@ -1,0 +1,29 @@
+
+.wrap {
+  display: block;
+}
+
+.para {
+  color: #db7093;
+}
+
+.headline {
+  color: #333;
+}
+
+.image {
+  display: block;
+  width: 120px;
+  height: 120px;
+  background: url('../../assets/image.jpg') no-repeat;
+  background-size: 100%;
+}
+
+.image-wrap {
+  display: block;
+  width: 120px;
+  height: 120px;
+  img {
+    width: 100%;
+  }
+}
