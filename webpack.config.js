@@ -74,6 +74,31 @@ module.exports = {
                 exclude: [/node_modules/],// 这里去排除node_modules，防止css modules影响到node_modules
             },
 
+            // {
+            //     test: /node_modules\/.*\.css$/,
+            //     use: isProd ? 
+            //         ExtractTextPlugin.extract(
+            //             { use: globalCssLoaders, fallback: 'style-loader'}
+            //         ) : [{
+            //             loader: 'style-loader'
+            //         },
+            //         ...globalCssLoaders,
+            //     ]
+            // },
+            {
+                test: /\.css$/,
+                use: [
+                    'style-loader',
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            sourceMap: true,
+                        }
+                    }
+                ],
+                include: [/node_modules/]
+            },
+
             // 当图片大小小于限制时会自动转成 base64
             {
                 test: /\.(png|jpg|jpeg|gif)$/,

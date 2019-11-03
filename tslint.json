@@ -1,16 +1,3 @@
 {
-  "rules": {
-      "no-unused-expression": [
-          true,
-          "allow-fast-null-checks"
-      ],
-      "no-duplicate-variable": true,
-      "no-unused-variable": [
-          true,
-          "react"
-      ],
-      "curly": false,
-      "class-name": true,
-      "triple-equals": true
-  }
+    "extends": "tslint-config-airbnb"
 }
