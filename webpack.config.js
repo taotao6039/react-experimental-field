@@ -1,6 +1,8 @@
-const webpack = require('webpack');
-const path = require('path');
+const webpack = require('webpack')
+const path = require('path')
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const nodeModulesPath = path.resolve(__dirname, 'node_modules')
 
 module.exports = {
     entry: path.resolve(__dirname + "/src/index.tsx"),
@@ -19,21 +21,13 @@ module.exports = {
     // Dev server options
     devServer: {
         port: 3000,
-        contentBase: path.join(__dirname + "/dist"), // 查找index.html文件的位置
+        // contentBase: path.join(__dirname + "/dist"), // 查找index.html文件的位置
         publicPath: "/public/", // 打包时生成的静态文件所在的位置，优先级高。默认是“/”
-        // after: function(app, server) {
-        //   console.log(app)
-        // },
-        // before: function(app, server) {
-        //   app.get('/some/path', function(req, res) {
-        //     res.json({ custom: 'response' });
-        //   });
-        // }
     },
 
     resolve: {
         alias: {},
-        extensions: [".ts", ".tsx", ".js", ".json", "scss"]
+        extensions: [".js", ".jsx", ".ts", ".tsx"]
     },
 
     module: {
@@ -41,10 +35,16 @@ module.exports = {
             // All files with a '.ts' or '.tsx' extension will be handled by 'awesome-typescript-loader'.
             {
                 test: /\.tsx?$/,
-                loader: "awesome-typescript-loader"
+                loader: "awesome-typescript-loader",
+                exclude : [/node_modules/]
             },
 
-            // All output '.js' files will have any sourcemaps re-processed by 'source-map-loader'.
+            {
+                test: /\.(js|jsx)$/,
+                use: ['babel-loader'],
+                exclude: [/node_modules/, nodeModulesPath]
+            },
+
             {
                 enforce: "pre",
                 test: /\.js$/,
@@ -57,11 +57,9 @@ module.exports = {
             },
 
             {
-                test: [/\.css$/, /\.scss$/],
-                exclude: [/node_modules/],// 这里去排除node_modules，防止css modules影响到node_modules
+                test: [/\.scss$/],
                 use: [
                     'style-loader',
-                    
                     {
                         loader: 'typings-for-css-modules-loader',
                         options: {
@@ -71,11 +69,9 @@ module.exports = {
                             sass: true
                         }
                     },
-
-                    {
-                        loader: 'sass-loader',
-                    }
-                ]
+                    'sass-loader'
+                ],
+                exclude: [/node_modules/],// 这里去排除node_modules，防止css modules影响到node_modules
             },
 
             // 当图片大小小于限制时会自动转成 base64
@@ -87,6 +83,7 @@ module.exports = {
         ]
     },
     plugins: [
+        new CleanWebpackPlugin(),
         new HtmlWebpackPlugin({
             filename: 'index.html',//这个是基于devserver中的contentBase目录
             template: path.resolve(__dirname + "/src/index.html")
@@ -101,5 +98,5 @@ module.exports = {
     // externals: {
     //     "react": "React",
     //     "react-dom": "ReactDOM"
-    // },
+    // }
 };
