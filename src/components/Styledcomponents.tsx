@@ -1,5 +1,5 @@
-import * as React from "react"
-import styled from 'styled-components'
+import * as React from 'react'
+import styledComponents from 'styled-components'
 
 export interface HelloProps {
   appName: string
@@ -10,21 +10,21 @@ export interface HelloProps {
 export interface HelloState {
 }
 
-const StyledCounter = styled.div`
+const StyledCounter = styledComponents.div`
   width: 100%;
   display: block;
 `
 
-const Headline = styled.p`
+const Headline = styledComponents.p`
   color: #333;
 `
 
-const Paragraph = styled.span`
+const Paragraph = styledComponents.span`
   width: 100%;
   color: #db7093;
   margin: 0 10px 0 10px;
 `
-const Button = styled.button`
+const Button = styledComponents.button`
   display: inline-block;
   width: 30px;
   height: 30px;
